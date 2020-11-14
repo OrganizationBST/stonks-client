@@ -25,7 +25,7 @@ class App extends Component {
     let currentDate = moment(startDate);
     stopDate = moment(stopDate);
     while (currentDate <= stopDate) {
-      dateArray.push( moment(currentDate).format('MM-DD') )
+      dateArray.push( moment(currentDate).format('MM/DD') )
       currentDate = moment(currentDate).add(1, 'days');
     }
     return dateArray;
@@ -33,7 +33,7 @@ class App extends Component {
 
   getChartData = (ticker) => {
     this.setState({ error: ''});
-		axios.post(`http://127.0.0.1:12345/predict`, null, { params: { ticker }})
+		axios.post('/predict', null, { params: { ticker }})
       .then(res => {
         const data = res.data;
         const color = data[data.length - 1] > data[0] ? '#34c759' : '#ff3a2f';
