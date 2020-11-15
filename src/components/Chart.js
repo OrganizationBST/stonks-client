@@ -31,7 +31,7 @@ class Chart extends Component {
               titleFontColor: 'black',
               callbacks: {
                 label: (data) => {
-                  return `${data.datasetIndex === 0 ? 'Predicted' : 'Actual'}: ${data.value} USD`;
+                  return `${data.datasetIndex === 0 ? ' Predicted' : ' Actual'}: ${data.value} USD`;
                 },
                 title: (data) => {
                   return toolTipTitles[data[0].index];
@@ -43,7 +43,7 @@ class Chart extends Component {
               backgroundColor: 'rgba(255, 255, 255, 0.7)',
               caretSize: 0,
               xPadding: 8, 
-              displayColors: false,
+              displayColors: true,
               intersect: false,
               axis: 'x'
             },

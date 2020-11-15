@@ -8,18 +8,18 @@ from model import *
 
 app = Flask(__name__)
 
-@app.route('/predict', methods=['POST'])
+@app.route('/api/predict', methods=['POST'])
 def predict():
     loadModel(request.args['ticker'])
-    lr = joblib.load("model.pkl")
+    tree = joblib.load("model.pkl")
     print ('Model loaded')
     model_columns = joblib.load("model_columns.pkl")
     print ('Model columns loaded')
 
-    if lr:
+    if tree:
         try:
             dataset = np.array(model_columns.drop(['Prediction'],1)[-30:])
-            predicted = lr.predict(dataset)
+            predicted = tree.predict(dataset)
             predicted = [round(num, 2) for num in predicted]
             actual = dataset.flatten().tolist()
             actual = [round(num, 2) for num in actual]
@@ -41,7 +41,7 @@ if __name__ == '__main__':
     except:
         port = 12345
 
-    lr = joblib.load("model.pkl")
+    tree = joblib.load("model.pkl")
     print ('Model loaded')
     model_columns = joblib.load("model_columns.pkl")
     print ('Model columns loaded')
