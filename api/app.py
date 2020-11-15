@@ -18,12 +18,16 @@ def predict():
 
     if lr:
         try:
-            # Set dataset equal to the last 30 rows of the original data set
-            dataset = model_columns.drop(['Prediction'],1)[-30:]
-            prediction = lr.predict(np.array(dataset))
-            prices = prediction.tolist()
-            prices = [round(num, 2) for num in prices]
-            return json.dumps(prices)
+            dataset = np.array(model_columns.drop(['Prediction'],1)[-30:])
+            predicted = lr.predict(dataset)
+            predicted = [round(num, 2) for num in predicted]
+            actual = dataset.flatten().tolist()
+            actual = [round(num, 2) for num in actual]
+
+            return {
+                'predicted': predicted,
+                'actual': actual
+            }
 
         except:
             return jsonify({'trace': traceback.format_exc()})

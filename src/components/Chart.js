@@ -9,10 +9,12 @@ class Chart extends Component {
   }
 
   render() {
-    const toolTipTitles = this.props.getDates();
+    const toolTipTitles = this.props.getDates;
+    
     return (
       <div className="chart">
         <Line
+          id='chart'
           data={this.props.chartData}
           height={500}
           options={{
@@ -26,15 +28,19 @@ class Chart extends Component {
               display: this.props.displayLegend,
             },
             tooltips: {
+              titleFontColor: 'black',
               callbacks: {
                 label: (data) => {
-                  return `${data.yLabel} USD`;
+                  return `${data.datasetIndex === 0 ? 'Predicted' : 'Actual'}: ${data.value} USD`;
                 },
                 title: (data) => {
                   return toolTipTitles[data[0].index];
+                },
+                labelTextColor: () => {
+                  return 'black'
                 }
               },
-              backgroundColor: 'rgba(0, 0, 0, 0.65)',
+              backgroundColor: 'rgba(255, 255, 255, 0.7)',
               caretSize: 0,
               xPadding: 8, 
               displayColors: false,
