@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import joblib
 import traceback
 import pandas as pd
@@ -6,7 +7,12 @@ import numpy as np
 import json
 from model import *
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../build', static_url_path='/')
+CORS(app)
+
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
 @app.route('/api/predict', methods=['POST'])
 def predict():
@@ -39,11 +45,11 @@ if __name__ == '__main__':
     try:
         port = int(sys.argv[1])
     except:
-        port = 12345
+        port = 5000
 
     tree = joblib.load("model.pkl")
     print ('Model loaded')
     model_columns = joblib.load("model_columns.pkl")
     print ('Model columns loaded')
 
-    app.run(port=port, debug=True)
+    app.run(port=port)
