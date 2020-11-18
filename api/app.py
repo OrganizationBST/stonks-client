@@ -52,4 +52,4 @@ if __name__ == '__main__':
     model_columns = joblib.load("model_columns.pkl")
     print ('Model columns loaded')
 
-    app.run(port=port)
+    app.run(host='0.0.0.0', port=port)
